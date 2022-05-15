@@ -1,0 +1,107 @@
+<template>
+    <div ref="echart"></div>
+</template>
+<script>
+import * as echarts from 'echarts'
+export default{
+    name:'EeChart',
+    props:{
+        isAxischart:{
+            type:Boolean,//类型 判断是折线图、柱状图还是饼状图
+            default:true//默认值
+        },
+        chartData:{
+            type:Object,
+            default(){
+                return{
+                    xData:[],
+                    series:[]
+                }
+            }
+        }
+    },
+    watch:{
+        chartData:{
+            handler:function(){//监听到chartData数据发生变化的时候，图也要重新绘制
+                this.initChart()//再次调用method里的方法进行重新绘制
+            },
+            deep:true//表示第一次也需要绘制
+        }
+    }
+    ,
+    methods:{
+        initChart(){
+            this.initChartData();
+            if(this.echart){
+                this.echart.setOption(this.options)
+            }
+            else{
+                this.echart=echarts.init(this.$refs.echart);//模板里的结点ref=echart，这里是拿到模板里的结点然后在这个结点上进行初始化
+                this.echart.setOption(this.Options)
+            }
+        },
+        initChartData(){
+            if(this.isAxischart){//传入的是折线图柱状图
+                this.axisOption.xAxis.data=this.chartData.xData;
+                this.axisOption.series=this.chartData.series;
+            }
+            else//传入的是饼状图
+            {
+                this.normalOption.series=this.chartData.series;
+            }
+        }
+    },
+    data(){
+        return{
+            echart:undefined,
+            axisOption:{//折线图和柱状图的配置
+                textStyle:{
+                    color:"#333",
+                },
+                grid:{
+                    
+                    left:"20%"
+                },
+                tooltip:{
+                    trigger:"axis",
+                },
+                xAxis:{
+                    type:"category",//类目轴
+                    data:[],
+                    axisLine:{
+                        lineStyle:{
+                            color:"#17b3a3",
+                        },
+                    },
+                },
+                yAxis:[
+                    {
+                        type:"value",
+                        axisLine:{
+                            lineStyle:{
+                                color:"17b3a3",
+                            },
+                        },
+                    },
+                ],
+                color:["#2ec7c9","#b6a2de","#5ab1ef","#ffb980","#d87a80","#8d98b3"],
+                series:[],
+            },
+            normalOption:{//饼状图的配置
+            tooltip:{
+                trigger:"item",
+            },
+            color:["#0f78f4","#dd536b","#9462e5","#a6a6a6","#e1bb22","#39c362","#3ed1cf"],
+            series:[],
+            }
+        }
+        
+    },
+    computed:{
+        Options(){
+            console.log(this.isAxischart)
+            return this.isAxischart? this.axisOption : this.normalOption;
+        }
+    }
+}
+</script>
