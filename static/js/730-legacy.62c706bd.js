@@ -1,0 +1,2 @@
+"use strict";(self["webpackChunkvue_manage"]=self["webpackChunkvue_manage"]||[]).push([[730],{5730:function(e,n,u){u.r(n),u.d(n,{default:function(){return f}});var t=function(){var e=this,n=e.$createElement,u=e._self._c||n;return u("div",[e._v("user页面")])},r=[],a={name:"userView2",data:function(){return{}}},l=a,s=u(1001),c=(0,s.Z)(l,t,r,!1,null,null,null),f=c.exports}}]);
+//# sourceMappingURL=730-legacy.62c706bd.js.map
